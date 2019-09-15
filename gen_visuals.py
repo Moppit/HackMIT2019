@@ -7,7 +7,7 @@ import matplotlib.animation as anim
 if __name__ == '__main__':
     # Read in a csv - sort by type
     csv_name = 'test.csv'
-    transcript_name = 'transcripts/text1568552419.txt'
+    transcript_name = 'transcripts/text1568559661.txt'
 
     graph_data = {}
     # Table format: time, type, value
@@ -29,12 +29,15 @@ if __name__ == '__main__':
 
             fig, ax = plt.subplots()
 
+            lines = {}
+
             for i in range(len(transcript_times)):
-                line = plt.plot([transcript_times[i]] * 2, [0, 1])
-                cursor = mplcursors.cursor(line)
-                cursor.connect(
-                    "add", lambda sel: sel.annotation.set_text(transcript_values[i])
-                )
+                line = plt.plot([transcript_times[i]] * 2, [0, 1], label=transcript_values[i])
+                lines[transcript_times[i]] = transcript_values[i]
+
+            mplcursors.cursor(ax).connect(
+                "add", lambda sel: sel.annotation.set_text(sel.artist.get_label())
+            )
 
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
@@ -48,9 +51,11 @@ if __name__ == '__main__':
             min_time = min([min(graph_data[entry]['time']) for entry in graph_data])
 
     # Plot time on the x axis - all the other data points on the same graph
+    keys = []
     for key in graph_data:
-        plt.plot([time - min_time for time in graph_data[key]['time']], graph_data[key]['value'], label=key)
-    plt.legend()
+        keys += plt.plot([time - min_time for time in graph_data[key]['time']], graph_data[key]['value'], label=key)
+    print(keys)
+    plt.legend(handles=keys)
     plt.xlabel('time (s)')
 
     plt.show()
