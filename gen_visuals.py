@@ -51,4 +51,6 @@ if __name__ == '__main__':
     for key in graph_data:
         plt.plot([time - min_time for time in graph_data[key]['time']], graph_data[key]['value'], label=key)
     plt.legend()
+    plt.xlabel('time (s)')
+
     plt.show()
