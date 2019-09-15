@@ -1,12 +1,13 @@
 import time
 import csv
 import matplotlib.pyplot as plt
+import mplcursors
 import matplotlib.animation as anim
 
 if __name__ == '__main__':
     # Read in a csv - sort by type
     csv_name = 'test.csv'
-    transcript_name = 'transcripts/EVEdpUYQRmxX.txt'
+    transcript_name = 'transcripts/text1568552419.txt'
 
     graph_data = {}
     # Table format: time, type, value
@@ -26,8 +27,14 @@ if __name__ == '__main__':
             print(transcript_times)
             print(transcript_values)
 
+            fig, ax = plt.subplots()
+
             for i in range(len(transcript_times)):
-                plt.plot([transcript_times[i]] * 2, [0, 1], label=transcript_values[i][0:60])
+                line = plt.plot([transcript_times[i]] * 2, [0, 1])
+                cursor = mplcursors.cursor(line)
+                cursor.connect(
+                    "add", lambda sel: sel.annotation.set_text(transcript_values[i])
+                )
 
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:

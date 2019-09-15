@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+matplotlib = "*"
+rev-ai = "*"
+mplcursors = "*"
+python-csv = "*"
+
+[requires]
+python_version = "3.7"
