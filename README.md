@@ -25,4 +25,21 @@ In the second terminal, run:
 ./muse-player -l 5000 -C /tmp/out.csv
 ```
 
-Start recording the conversation once the conversation partner wears the Muse.
+Start recording the conversation once the conversation partner wears the Muse. After the conversation is over, remove the Muse at the same time that the audio recording is ended.
+
+If your recorded file is an mp4, convert it to mp3. This can be done by installing the ffmpeg package (it is available with Brew) and running the following command:
+```
+ffmpeg -i <input.mp4> <destination.mp3>
+```
+Then, run compressor.py:
+```
+python3 compressor.py
+```
+Run the audio_to_text.py script and pass in the file path to the mp3 file.
+```
+python3 audio_to_text.py -f <file_path>
+```
+Run the gen_visuals.py script to view a graph of the data.
+```
+python3 gen_visuals.py
+```
